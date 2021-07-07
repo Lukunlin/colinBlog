@@ -32,7 +32,7 @@
             details: "好用的各种在线工具和工具推荐" 
         }
     ],
-    "footer": "Copyright © <a href='https://beian.miit.gov.cn'>粤ICP备2021002376号</a>",
+    "footer": "Copyright © 2021 colin <a href='https://beian.miit.gov.cn'>粤ICP备2021002376号</a>",
     "footerHtml": true
 }
 ---
