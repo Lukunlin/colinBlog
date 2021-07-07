@@ -11,6 +11,10 @@ module.exports = {
             description: '专注记事和一些技术技巧记录的博客'
         }
     },
+    head: [
+        ['link', { rel: 'icon', href: 'http://static.tongnianya.vip/renyiLogo.jpeg' }]
+    ],
+    dest: './dist',
     themeConfig: {
         sidebar: [
             {
