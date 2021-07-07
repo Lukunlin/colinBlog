@@ -16,6 +16,13 @@ module.exports = {
     ],
     dest: './dist',
     themeConfig: {
+        smoothScroll: true,
+        nav: [
+            { text: '仁义咏春官网', link: 'http://www.renyi1893.com' },
+            { text: '联系我', link: 'mailto:bboykungu@qq.com' },
+        ],
+        nextLinks: false,
+        prevLinks: false,
         sidebar: [
             {
                 title: '仁义咏春专栏',
@@ -38,6 +45,7 @@ module.exports = {
                 path: '/practicalTools/'
             }
         ],
+        lastUpdated: '最后更新时间为: ',
         plugins: [
             [
                 '@vuepress/google-analytics',
