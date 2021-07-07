@@ -16,6 +16,19 @@ module.exports = {
         logo: 'http://static.tongnianya.vip/renyiLogo.jpeg',
         navbar: [
             { text: '仁义咏春官网', link: 'http://www.renyi1893.com' },
+            {
+                text: '技术支持 | 友情支持',
+                children: [
+                    {
+                        text: '茂神博客',
+                        link: 'https://fe-mm.com'
+                    },
+                    {
+                        text: 'Vuepress',
+                        link: 'https://v2.vuepress.vuejs.org/zh/'
+                    }
+                ]
+            },
             { text: '联系我', link: 'mailto:bboykungu@qq.com' },
         ],
         sidebar: [
