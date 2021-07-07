@@ -6,7 +6,8 @@
     "author": "colin",
     "scripts": {
         "dev": "vuepress dev docs",
-        "build": "vuepress build docs"
+        "build": "vuepress build docs",
+        "release": "rm -rf dist && vuepress build docs"
     },
     "devDependencies": {
         "@vue/component-compiler-utils": "^3.2.2",
