@@ -11,41 +11,40 @@ module.exports = {
             description: '专注记事和一些技术技巧记录的博客'
         }
     },
-    head: [
-        ['link', { rel: 'icon', href: 'http://static.tongnianya.vip/renyiLogo.jpeg' }]
-    ],
     dest: './dist',
     themeConfig: {
-        smoothScroll: true,
-        nav: [
+        logo: 'http://static.tongnianya.vip/renyiLogo.jpeg',
+        navbar: [
             { text: '仁义咏春官网', link: 'http://www.renyi1893.com' },
             { text: '联系我', link: 'mailto:bboykungu@qq.com' },
         ],
-        nextLinks: false,
-        prevLinks: false,
         sidebar: [
             {
-                title: '仁义咏春专栏',
-                path: '/renyiyongchun/',
+                text: '仁义咏春专栏',
+                link: '/renyiyongchun/',
             },
             {
-                title: 'macOs专栏',
-                path: '/mac/'
+                text: 'macOs专栏',
+                link: '/mac/'
             },
             {
-                title: 'windows专栏',
-                path: '/windows/'
+                text: 'windows专栏',
+                link: '/windows/'
             },
             {
-                title: '软件开发专栏',
-                children: ['coding/git', 'coding/webstorm', 'coding/vscode', 'coding/problem']
+                text: '软件开发专栏',
+                children: ['/coding/git.md', '/coding/webstorm.md', '/coding/vscode.md', '/coding/problem.md']
             },
             {
-                title: '实用工具',
-                path: '/practicalTools/'
+                text: '实用工具',
+                link: '/practicalTools/'
             }
         ],
-        lastUpdated: '最后更新时间为: ',
+        editLink: false,
+        contributorsText: '贡献者们',
+        lastUpdatedText: '最后更新时间为',
+        notFound: ['没有找到当前页面路径,请联系管理员'],
+        backToHome: '回到首页',
         plugins: [
             [
                 '@vuepress/google-analytics',

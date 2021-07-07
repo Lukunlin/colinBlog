@@ -1,12 +1,16 @@
 ---
 {
-  "home": true,
-  "heroImage": "http://static.tongnianya.vip/renyiLogo.jpeg",
-  "heroText": "Colin",
-  "tagline": "专注记事和一些技术技巧记录的有博客",
-  "actionText": "开启传送门",
-  "actionLink": "/renyiyongchun/",
-  "features": [
+    "home": true,
+    "heroImage": "http://static.tongnianya.vip/renyiLogo.jpeg",
+    "heroText": "Colin",
+    "tagline": "专注记事和一些技术技巧记录的有博客",
+    "actions": [
+        {
+            "text": "开启传送门",
+            "link": "/renyiyongchun/"
+        }
+    ],
+    "features": [
         {
             "title": "仁义咏春",
             details: "传统武术的魅力"
@@ -27,7 +31,8 @@
             "title": "实用工具",
             details: "好用的各种在线工具和工具推荐" 
         }
-  ],
-  "footer": "Copyright © 粤ICP备2021002376号"
+    ],
+    "footer": "Copyright © <a href='https://beian.miit.gov.cn'>粤ICP备2021002376号</a>",
+    "footerHtml": true
 }
 ---
