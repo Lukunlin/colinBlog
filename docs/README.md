@@ -3,7 +3,7 @@
     "home": true,
     "heroImage": "http://static.tongnianya.vip/renyiLogo.jpeg",
     "heroText": "Colin",
-    "tagline": "专注记事和一些技术技巧记录的有博客",
+    "tagline": "专注记事和一些技术技巧记录的博客",
     "actions": [
         {
             "text": "开启传送门",
