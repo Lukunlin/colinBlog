@@ -1,7 +1,3 @@
----
-sidebarDepth: 2
----
-
 # Windows 平台
 
 ## 终端神器 Cmder

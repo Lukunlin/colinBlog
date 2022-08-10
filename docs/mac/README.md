@@ -1,10 +1,4 @@
----
-sidebarDepth: 2
----
-
 # MacOs系列
-
-
 
 ## Homebrew
 
