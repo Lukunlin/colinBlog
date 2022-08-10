@@ -31,7 +31,7 @@ type Type = { x: string, y: string }
 type PartialType = Partial<Type>
 ```
 
-```sh
+```typescript
 // 源码实现
 type Partial<T> = {
     [P in keyof T]?: T[P];
@@ -46,13 +46,13 @@ type Partial<T> = {
 
 - ### Required<Type> Required是Partial的反面，Required 创造一个新类型，规定内部内部所有的属性都是必须的
 
-```sh
+```typescript
 type Type = { x?: string, y?: string }
 // { x: string; y: string }
 type RequiredType = Required<Type>
 ```
 
-```sh
+```typescript
 // 源码实现
 type Required<T> = {
     [P in keyof T]-?: T[P]
@@ -61,13 +61,13 @@ type Required<T> = {
 
 - ### Readonly<Type> 创建一个新类型，同时所有属性都变为只读属性，这也就意味着这些属性不能被重新赋值
 
-```sh
+```typescript
 type Type = { x: string, y: string }
 // { readonly x: string; readonly y: string }
 type ReadonlyType = Readonly<Type>
 ```
 
-```sh
+```typescript
 // 源码实现,我们也可以使用关键字即可完成
 type Readonly<T> = {
     readonly [P in keyof T]: T[P];
@@ -80,7 +80,7 @@ type Readonly<T> = {
 
 TypeScript 没有给出去除 Readonly 修饰符工具函数此时我们就可以自己来实现了，我们把这个工具类型叫 NonReadonly。
 
-```sh
+```typescript
 type position = { readonly x: string; readonly y: string}
 type NonReadonly<T> = {
     -readonly [P in keyof T]: T[P]
@@ -91,12 +91,12 @@ type NonReadonlyPos = NonReadonly<position>
 
 - ### Record<Keys, Type> 创造一个新类型，同时将Keys中所有的属性的值的类型转化为 T 类型。
 
-```sh
+```typescript
 // { x: string; y: string }
 type Type = Record<"x" | "y", string>
 ```
 
-```sh
+```typescript
 interface UserInfo {
   age: number
 }
@@ -111,7 +111,7 @@ const userList: Record<UserName, UserInfo> = {
 }
 ```
 
-```sh
+```typescript
 // 源码实现,我们也可以使用关键字即可完成
 type Record<K extends keyof any, T> = {
     [P in K]: T
@@ -120,19 +120,19 @@ type Record<K extends keyof any, T> = {
 
 泛型约束 `K extends` 相信你能看懂，`keyof any` 你可能有点犯迷糊，`keyof any` 表示对象 `key` 的类型，所以 `keyof any === string | number | symbol`，不信你可以复制以下代码，在 TS 环境测试下：
 
-```sh
+```typescript
 // type unionKeyType = string | number | symbol
 type unionKeyType = keyof any
 ```
 
 - ### Exclude<Type, ExcludedUnion> 通过排除类型中可分配给 ExcludedUnion 的所有联合成员来创建新类型
 
-```sh
+```typescript
 // "x" | "y"
 type ExcludedType = Exclude<"x" | "y" | "z", "z">
 ```
 
-```sh
+```typescript
 // 确定从对象中获取固定的 key 非常有用：
 
 interface User {
@@ -153,19 +153,19 @@ const surnameProp = getUserProperty(user, "surname")
 const personalNumberProp = getUserProperty(user, "personalNumber")
 ```
 
-```sh
+```typescript
 // 源码实现
 type Exclude<T, U> = T extends U ? never : T
 ```
 
 - ### Extract<Type, Union> Extract 是 Exclude 的反面。它通过从可分配给联合的类型中提取所有联合成员来创建新类型。
 
-```sh
+```typescript
 // "x" | "y"
 type ExtractedType = Extract<"x" | "y" | "z", "x" | "y">
 ```
 
-```sh
+```typescript
 // 用来提取两个类型的公有属性名会非常的合适：
 
 interface Human {
@@ -182,14 +182,14 @@ interface Cat {
 type CommonKeys = Extract<keyof Human, keyof Cat>
 ```
 
-```sh
+```typescript
 // 源码实现
 type Extract<T, U> = T extends U ? T : never
 ```
 
 - ### Pick<Type, Keys> Pick 的作用是将 Type 类型中的 Keys 类型提取出来，创建为一个新类型。
 
-```sh
+```typescript
 type LongType = {
   a: string
   b: string
@@ -213,7 +213,7 @@ const address: UserAddress = {
 }
 ```
 
-```sh
+```typescript
 // 源码实现，注意下泛型约束 K extends keyof T
 type Pick<T, K extends keyof T> = {
     [P in K]: T[P]
@@ -222,7 +222,7 @@ type Pick<T, K extends keyof T> = {
 
 - ### Omit<Type, Keys> Omit 从 Type 的所有属性中，移除 Keys 键用剩下的键来创建新类型。
 
-```sh
+```typescript
 type LongType = {
   a: string
   b: string
@@ -233,7 +233,7 @@ type LongType = {
 type ShortType = Omit<LongType, "a" | "b">
 ```
 
-```sh
+```typescript
 // 源码展示， Pick 的实现用到了 Exclude 来实现的：
 type Omit<T, K extends keyof any> = { [P in Exclude<keyof T, K>]: T[P]; }
 // 如果你用较早期的 TS ,Omit 的实现可能是这样的，效果一样，思路不通而已：
@@ -245,7 +245,7 @@ type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 原因我想破了脑袋也没想到，去 Github 搜了下，发现大家普遍的需求是让 Omit 的写法更严谨，TS 官方答应着，并没实现，点击了解 ["Omit" type using "keyof any" instead of "keyof T"](https://github.com/microsoft/TypeScript/issues/32376)
 如果说，我们想要一个严格的 `Omit`，我们可以把 `Omit` 的 `K extends keyof any` 改为 `K extends keyof T` 自己实现一个较为严格的 `Omit`，我们叫它 Remove ，源码：
 
-```sh
+```typescript
 type Remove<T, K extends keyof T> = { [P in Exclude<keyof T, K>]: T[P]; }
 
 interface IPerson {
@@ -261,7 +261,7 @@ type noRandomKey = Remove<IPerson, "灰机">; // no
 
 基本上，它是 Exclude<T，null | undefined> 的缩写：
 
-```sh
+```typescript
 type Type = string | null | undefined;
 // "string"
 type NonNullableType = NonNullable<Type>
@@ -269,7 +269,7 @@ type NonNullableType = NonNullable<Type>
 
 - ### Parameters<Type> 参数从函数类型 Type 的参数中使用的类型构造元组类型
 
-```sh
+```typescript
 const addNumbers = (x: number, y: number) => {
   return x + y;
 }
@@ -279,7 +279,7 @@ type FunctionParameters = Parameters<typeof addNumbers>
 
 使用 addNumbers 的时候为什么还要加上 typeof 呢？因为 addNumbers 是 JS 代码实现，我们需要的是函数签名，所以加上 typeof ，如果我们直接给一个函数签名，就不需要加上 typeof ，例如：
 
-```sh
+```typescript
 type addNumbers = (x: number, y: number) => number
 
 // [x: number, y: number]
@@ -288,7 +288,7 @@ type FunctionParameters = Parameters<addNumbers>
 
 您还可以检索单个参数：
 
-```sh
+```typescript
 const addNumbers = (x: number, y: number) => {
   return x + y
 }
@@ -302,7 +302,7 @@ type ThirdParam = Parameters<typeof addNumbers>[2]
 
 如果获取函数参数的类型以确保类型安全很有用，尤其是在外部使用时：
 
-```sh
+```typescript
 const saveUser = (user: { name: string; surname: string; age: number }) => {
   // ...
 }
@@ -315,7 +315,7 @@ const user: Parameters<typeof saveUser>[0] = {
 
 源码展示，仔细看这个条件泛型，尤其是 `infer R`: 
 
-```sh
+```typescript
 type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) => any ? P : never
 ```
 
@@ -323,7 +323,7 @@ type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) 
 
 基本上，它类似于参数，但适用于类构造函数：
 
-```sh
+```typescript
 class UserManager {
     private name: string
     private surname: string
@@ -338,7 +338,7 @@ type UserManagerConstructorParams = ConstructorParameters<typeof UserManager>
 
 与 Parameters 类型相同，当我们外部使用时，它有助于确保构造函数接受我们的参数：
 
-```sh
+```typescript
 class UserManager {
     private name: string
     private surname: string
@@ -354,14 +354,14 @@ const params: ConstructorParameters<typeof UserManager>[0] = {
 }
 ```
 
-```sh
+```typescript
 // 源码展示
 type ConstructorParameters<T extends new (...args: any) => any> = T extends new (...args: infer P) => any ? P : never
 ```
 
 - ### ReturnType<Type> 构造函数Type的返回类型的类型
 
-```sh
+```typescript
 const getUser = () => ({
     name: "John",
     surname: "Doe",
@@ -373,7 +373,7 @@ type FunctionReturnType = ReturnType<typeof getUser>
 
 与 Parameters 和 ConstructionParameters 一样，当您外部使用并希望获得导入函数的返回类型时，它很有用:
 
-```sh
+```typescript
 const getUser = () => ({
     name: "John",
     surname: "Doe",
@@ -387,7 +387,7 @@ const user: User = {
 }
 ```
 
-```sh
+```typescript
 // 源码展示
 type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
 ```
@@ -396,7 +396,7 @@ type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => i
 
 基本上，它类似于 ReturnType，但作用于类构造函数：
 
-```sh
+```typescript
 class UserManager {
     name: string
     surname: string
@@ -412,7 +412,7 @@ type UserMangerInstanceType = InstanceType<typeof UserManager>
 
 您可能不会这样做，因为您可以直接使用 UserManager 类型
 
-```sh
+```typescript
 class UserManager {
     name: string
     surname: string
@@ -428,13 +428,13 @@ const user2: UserManager = {
 }
 ```
 
-```sh
+```typescript
 // 源码展示
 type InstanceType<T extends new (...args: any) => any> = T extends new (...args: any) => infer R ? R : any
 ```
 
 - ### ThisParameterType<Type> 提取函数 this 的类型，若函数类型并没有此参数，则提取为 unknown 类型
-```sh
+```typescript
 // 因为 this 指向的问题，项目中并不常用
 function toHex(this: Number) {
     return this.toString(16)
@@ -445,7 +445,7 @@ function numberToString(n: ThisParameterType<typeof toHex>) {
 }
 ```
 
-```sh
+```typescript
 // 源码展示
 type ThisParameterType<T> = T extends (this: infer U, ...args: any[]) => any ? U : unknown
 ```

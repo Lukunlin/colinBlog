@@ -46,7 +46,7 @@ module.exports = {
 			},
 			{
 				text: "软件开发专栏",
-				children: ["/coding/git.md", "/coding/webstorm.md", "/coding/vscode.md", "/coding/problem.md", "/coding/typescripts.md"]
+				children: ["/coding/git.md", "/coding/webstorm.md", "/coding/vscode.md", "/coding/problem.md"]
 			},
 			{
 				text: "实用工具",
