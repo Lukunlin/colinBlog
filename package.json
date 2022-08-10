@@ -1,17 +1,27 @@
 {
     "name": "colinBlog",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "专注记事和一些技术技巧记录的博客",
     "main": "index.js",
-    "author": "colin",
+    "author": "colin <bboykungu@qq.com>",
     "scripts": {
         "dev": "vuepress dev docs",
         "build": "vuepress build docs",
         "release": "rm -rf dist && vuepress build docs"
     },
     "devDependencies": {
-        "@vue/component-compiler-utils": "^3.2.2",
-        "@vuepress/theme-blog": "^2.3.3",
-        "vuepress": "^2.0.0-beta.21"
+        "@vuepress/bundler-vite": "^2.0.0-beta.49",
+        "@vuepress/bundler-webpack": "^2.0.0-beta.49",
+        "@vuepress/plugin-docsearch": "^2.0.0-beta.49",
+        "@vuepress/plugin-google-analytics": "^2.0.0-beta.49",
+        "@vuepress/plugin-pwa-popup": "^2.0.0-beta.49",
+        "@vuepress/plugin-shiki": "2.0.0-beta.49",
+        "cross-env": "^7.0.3",
+        "husky": "^7.0.1",
+        "lint-staged": "^11.0.1",
+        "prettier": "^2.3.2",
+        "sass-loader": "^13.0.2",
+        "vue-scriptx": "^0.2.5",
+        "vuepress": "^2.0.0-beta.49"
     }
 }
