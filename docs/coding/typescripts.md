@@ -6,22 +6,25 @@
 
 ## 常用技巧
 - ## 交叉类型 And 联合联合
+
 ```sh
 # 交叉类型
 T & U
 # 联合类型
 T | U
 ```
+
 交叉类型表示最终输出的类型必须是 T和U的联合, 假设有T类型有name,U类型有sex键,那么输出的类型必须包含两者
 联合类型则更多表示"或"的关系,即为类型要么是T类型或与U类型
 
 - ## 工具类型 as 工具函
+
 以下源码展示，均可在 TypeScript 项目的 ./node_modules/typescript/lib/lib.es5.d.ts 路径找到
 因为官方文档实施更新的缘故，此文章可能过时，请以官方文档为准 [传送门](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 本目录感谢作者 [蜡笔小伟](https://www.jianshu.com/u/491bd4155f96) [#原文出处](https://www.jianshu.com/p/050cc5ba098a?u_atoken=f9cf64a8-0b0d-47df-8507-73e48d090594&u_asession=01uC_GOhfjRwhm2ZBaH-apr6ItV86kTGtyAuRsyTWuuGZvfmOliAtCF9JggU2fLchNX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K_b4nAKDS5wNeu8acUFitOzUPWO0ljqS-0m6uUj231Ub2BkFo3NEHBv0PZUm6pbxQU&u_asig=05kTpl17A0roe5q06Aol0_Pzpdyz8Wvh0l2HH_SE719lbEO48XSvhvcxuXsYEXmt0PMg9u8l78zjs99HJzpDxrS6H-WhIsgzfy2mtuUxBlaGUQHNkXObDm9pGSWw5DQOTi3wOOJCeYgI4YeybzJQpJ1dQ-H7PlKuFS7UbQjJQpoSv9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzTp1YTXDBCsygQ1GxYWtsKK078mEbbqh3WLyYen1w_g2U1_gr7b-5Q11Fu-gS_hPv-3h9VXwMyh6PgyDIVSG1W_H-gYl_9bUa9eCAD_UvsYvko3vS8lKQvxYTphZ3n_8OVVAaippJOesBdc1exo2UpRC3meqmuThudBbNBA9PwpNmWspDxyAEEo4kbsryBKb9Q&u_aref=JlNs1Z0Fs1Z8IbUxZxQtkdXJbV8%3D)
 
-
 - ### Partial<Type> 会创建一个新的类型同时它内部所有属性都变成可选的新类型
+
 ```sh
 type Type = { x: string, y: string }
 // { x?: string; y?: string }
@@ -38,9 +41,11 @@ type Partial<T> = {
     [P in keyof T]+?: T[P]; // 多个加号
 }
 ```
+
 比如在一些set函数里对用户信息的更改，一般会要求传入完整的用户信息，如果我们想重构一个函数但又不不破坏用户的类型，我们就可以使用该工具函数把用户类型变为全部键可选，来达到局部更新
 
 - ### Required<Type> Required是Partial的反面，Required 创造一个新类型，规定内部内部所有的属性都是必须的
+
 ```sh
 type Type = { x?: string, y?: string }
 // { x: string; y: string }
@@ -55,6 +60,7 @@ type Required<T> = {
 ```
 
 - ### Readonly<Type> 创建一个新类型，同时所有属性都变为只读属性，这也就意味着这些属性不能被重新赋值
+
 ```sh
 type Type = { x: string, y: string }
 // { readonly x: string; readonly y: string }
@@ -71,7 +77,9 @@ type Readonly<T> = {
     +readonly [P in keyof T]: T[P];
 };
 ```
+
 TypeScript 没有给出去除 Readonly 修饰符工具函数此时我们就可以自己来实现了，我们把这个工具类型叫 NonReadonly。
+
 ```sh
 type position = { readonly x: string; readonly y: string}
 type NonReadonly<T> = {
@@ -82,6 +90,7 @@ type NonReadonlyPos = NonReadonly<position>
 ```
 
 - ### Record<Keys, Type> 创造一个新类型，同时将Keys中所有的属性的值的类型转化为 T 类型。
+
 ```sh
 // { x: string; y: string }
 type Type = Record<"x" | "y", string>
@@ -117,6 +126,7 @@ type unionKeyType = keyof any
 ```
 
 - ### Exclude<Type, ExcludedUnion> 通过排除类型中可分配给 ExcludedUnion 的所有联合成员来创建新类型
+
 ```sh
 // "x" | "y"
 type ExcludedType = Exclude<"x" | "y" | "z", "z">
@@ -149,6 +159,7 @@ type Exclude<T, U> = T extends U ? never : T
 ```
 
 - ### Extract<Type, Union> Extract 是 Exclude 的反面。它通过从可分配给联合的类型中提取所有联合成员来创建新类型。
+
 ```sh
 // "x" | "y"
 type ExtractedType = Extract<"x" | "y" | "z", "x" | "y">
@@ -177,6 +188,7 @@ type Extract<T, U> = T extends U ? T : never
 ```
 
 - ### Pick<Type, Keys> Pick 的作用是将 Type 类型中的 Keys 类型提取出来，创建为一个新类型。
+
 ```sh
 type LongType = {
   a: string
@@ -209,6 +221,7 @@ type Pick<T, K extends keyof T> = {
 ```
 
 - ### Omit<Type, Keys> Omit 从 Type 的所有属性中，移除 Keys 键用剩下的键来创建新类型。
+
 ```sh
 type LongType = {
   a: string
@@ -255,6 +268,7 @@ type NonNullableType = NonNullable<Type>
 ```
 
 - ### Parameters<Type> 参数从函数类型 Type 的参数中使用的类型构造元组类型
+
 ```sh
 const addNumbers = (x: number, y: number) => {
   return x + y;
