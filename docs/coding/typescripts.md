@@ -14,9 +14,9 @@ T & U
 T | U
 ```
 ::: tip 解释
-交叉类型表示最终输出的类型必须是 T和U的联合, 假设有T类型有name,U类型有sex键,那么输出的类型必须[包含两者]
+交叉类型表示最终输出的类型必须是 T和U的联合, 假设有T类型有name,U类型有sex键,那么输出的类型必须包含两者
 
-联合类型则更多表示"或"的关系,即为类型要么是T类型[或与]U类型
+联合类型则更多表示"或"的关系,即为类型要么是T类型或与U类型
 :::
 
 
@@ -26,7 +26,7 @@ T | U
 因为官方文档实施更新的缘故，此文章可能过时，请以官方文档为准 [传送门](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 本目录感谢作者 [蜡笔小伟](https://www.jianshu.com/u/491bd4155f96) [原文出处](https://www.jianshu.com/p/050cc5ba098a?u_atoken=f9cf64a8-0b0d-47df-8507-73e48d090594&u_asession=01uC_GOhfjRwhm2ZBaH-apr6ItV86kTGtyAuRsyTWuuGZvfmOliAtCF9JggU2fLchNX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K_b4nAKDS5wNeu8acUFitOzUPWO0ljqS-0m6uUj231Ub2BkFo3NEHBv0PZUm6pbxQU&u_asig=05kTpl17A0roe5q06Aol0_Pzpdyz8Wvh0l2HH_SE719lbEO48XSvhvcxuXsYEXmt0PMg9u8l78zjs99HJzpDxrS6H-WhIsgzfy2mtuUxBlaGUQHNkXObDm9pGSWw5DQOTi3wOOJCeYgI4YeybzJQpJ1dQ-H7PlKuFS7UbQjJQpoSv9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzTp1YTXDBCsygQ1GxYWtsKK078mEbbqh3WLyYen1w_g2U1_gr7b-5Q11Fu-gS_hPv-3h9VXwMyh6PgyDIVSG1W_H-gYl_9bUa9eCAD_UvsYvko3vS8lKQvxYTphZ3n_8OVVAaippJOesBdc1exo2UpRC3meqmuThudBbNBA9PwpNmWspDxyAEEo4kbsryBKb9Q&u_aref=JlNs1Z0Fs1Z8IbUxZxQtkdXJbV8%3D)
 :::
-#### Partial<Type> 会创建一个新的类型同时它内部[所有属性都变成可选]的新类型
+#### Partial<Type> 会创建一个新的类型同时它内部所有属性都变成可选的新类型
 ```javascript
 type Type = { x: string, y: string }
 // { x?: string; y?: string }
@@ -46,7 +46,7 @@ type Partial<T> = {
 比如在一些set函数里对用户信息的更改，一般会要求传入完整的用户信息，如果我们想重构一个函数但又不不破坏用户的类型，我们就可以使用该工具函数把用户类型变为全部键可选，来达到局部更新
 :::
 
-#### Required<Type> Required是Partial的反面，Required 创造一个新类型，规定内部内部[所有的属性都是必须]的
+#### Required<Type> Required是Partial的反面，Required 创造一个新类型，规定内部内部所有的属性都是必须的
 ```javascript
 type Type = { x?: string, y?: string }
 // { x: string; y: string }
@@ -59,7 +59,7 @@ type Required<T> = {
 };
 ```
 
-#### Readonly<Type> 创建一个新类型，同时所有属性都变为只读属性，这也就意味着这些属性[不能被重新赋值]
+#### Readonly<Type> 创建一个新类型，同时所有属性都变为只读属性，这也就意味着这些属性不能被重新赋值
 ```javascript
 type Type = { x: string, y: string }
 // { readonly x: string; readonly y: string }
@@ -87,7 +87,7 @@ type NonReadonly<T> = {
 type NonReadonlyPos = NonReadonly<position>
 ```
 
-#### Record<Keys, Type> 创造一个新类型，同时将Keys中[所有的属性的值的类型转化]为 T 类型。
+#### Record<Keys, Type> 创造一个新类型，同时将Keys中所有的属性的值的类型转化为 T 类型。
 ```javascript
 // { x: string; y: string }
 type Type = Record<"x" | "y", string>
@@ -120,7 +120,7 @@ type Record<K extends keyof any, T> = {
 type unionKeyType = keyof any
 ```
 
-#### Exclude<Type, ExcludedUnion> 通过[排除类型中可分配]给 ExcludedUnion 的所有联合成员来创建新类型
+#### Exclude<Type, ExcludedUnion> 通过排除类型中可分配给 ExcludedUnion 的所有联合成员来创建新类型
 ```javascript
 // "x" | "y"
 type ExcludedType = Exclude<"x" | "y" | "z", "z">
@@ -232,7 +232,7 @@ type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 原因我想破了脑袋也没想到，去 Github 搜了下，发现大家普遍的需求是让 Omit 的写法更严谨，TS 官方答应着，并没实现，点击了解 ["Omit" type using "keyof any" instead of "keyof T"](https://github.com/microsoft/TypeScript/issues/32376)
 
 如果说，我们想要一个严格的 `Omit`，我们可以把 `Omit` 的 `K extends keyof any` 改为 `K extends keyof T` 自己实现一个较为严格的 `Omit`，我们叫它 Remove ，源码：
-
+:::
 ```javascript
 type Remove<T, K extends keyof T> = { [P in Exclude<keyof T, K>]: T[P]; }
 
@@ -244,7 +244,6 @@ interface IPerson {
 type noAge = Remove<IPerson, "age">; // yes type noAge = { name: string; }
 type noRandomKey = Remove<IPerson, "灰机">; // no
 ```
-:::
 
 #### NonNullable<Type> NonNullable 通过从类型中排除 null 和 undefined 来创建新类型。
 ##### 基本上，它是 Exclude<T，null | undefined> 的缩写：
