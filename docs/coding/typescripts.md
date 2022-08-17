@@ -14,6 +14,20 @@ T | U
 ```
 - 交叉类型表示最终输出的类型必须是 T和U的联合, 假设有T类型有name,U类型有sex键,那么输出的类型必须包含两者. 联合类型则更多表示"或"的关系,即为类型要么是T类型或与U类型
 
+### 改变类型的某一个键的类型
+```typescript
+// 假设从第三方类型库拿到一个类型 zoom
+// zoom : { dog: Quadruped, tiger: Quadruped, monkey: Amphibian, people: Mammal, immortal: Mammal }
+// 但现在你认为人类和神仙应该有无限可能, 不限于 Mammal, 那么应该可以用 extends 的关键字技巧
+
+type TAnyProbablyKey = "people" | "immortal"
+type TUpgrade<T> = {
+    [P in keyof T]: P extends TAnyProbablyKey ? any : T[P]
+}
+
+type TZoom = TUpgrade<zoom>
+```
+
 ### 关键字&运算符
 - keyof \<type\> 用于表示一个对象类型的【键名的实际类型】
 - in 整体举例 \[变量 in 类型\]用于获取一个对象类型里的每个【键名】暂存给左边申明的变量
