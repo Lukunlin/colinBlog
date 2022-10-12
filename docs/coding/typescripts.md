@@ -2,7 +2,12 @@
 
 - [官网](https://www.typescriptlang.org/)
 - [中文文档](http://shouce.jb51.net/typescript-handbook/index.html/)
+- [友情文档](https://github.com/mqyqingfeng/learn-typescript)
 - [Github](https://github.com/microsoft/TypeScript/)
+- [工具箱- ts-toolbelt](https://github.com/millsp/ts-toolbelt)
+- [工具箱- utility-types](https://github.com/piotrwitek/utility-types)
+- [工具箱- SimplyTyped]([https://github.com/piotrwitek/utility-types](https://github.com/andnp/SimplyTyped))
+- [题库挑战- type-challenges]([https://github.com/piotrwitek/utility-types](https://github.com/type-challenges/type-challenges/blob/main/README.zh-CN.md))
 
 ## 常用技巧
 ### 交叉类型 And 联合联
