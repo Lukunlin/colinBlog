@@ -22,7 +22,16 @@ T | U
 ```
 - 交叉类型表示最终输出的类型必须是 T和U的联合, 假设有T类型有name,U类型有sex键,那么输出的类型必须包含两者. 联合类型则更多表示"或"的关系,即为类型要么是T类型或与U类型
 
-### 改变类型的某一个键的类型
+### 约束一个类型的key
+```typescript
+type TCustomKey = "bboy" | "kungu" | "HSL" | "HHF" | "LLL" | "XM"
+
+type TUpgrade<T> = {
+    [p in TCustomKey]: TCustomKey & string
+}
+```
+
+### 改变类型的某一个键的类型[进阶]
 ```typescript
 // 假设从第三方类型库拿到一个类型 zoom
 // zoom : { dog: Quadruped, tiger: Quadruped, monkey: Amphibian, people: Mammal, immortal: Mammal }
