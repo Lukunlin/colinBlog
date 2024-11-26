@@ -27,7 +27,7 @@ T | U
 type TCustomKey = "bboy" | "kungu" | "HSL" | "HHF" | "LLL" | "XM"
 
 type TUpgrade<T> = {
-    [p in TCustomKey]: TCustomKey & string
+    [p in T]: TCustomKey & string
 }
 ```
 
@@ -43,6 +43,20 @@ type TUpgrade<T> = {
 }
 
 type TZoom = TUpgrade<zoom>
+
+// 下面是一个完整的使用例子
+type ChangeTypeBasedOnKey<T, K extends keyof T, NewType> = 
+  Omit<T, K> & {
+    [P in K]: P extends K ? NewType : T[P];
+  };
+
+interface ExampleType {
+  a: number;
+  b: string;
+  c: boolean;
+}
+
+type NewType = ChangeTypeBasedOnKey<ExampleType, 'a', string>;
 ```
 
 ### 关键字&运算符
